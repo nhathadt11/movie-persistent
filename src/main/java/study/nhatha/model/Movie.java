@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="genre" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *         &lt;element name="body" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}token"/>
  *         &lt;element name="duration" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}token"/>
@@ -49,7 +48,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "title",
     "year",
     "genre",
-    "body",
     "country",
     "duration",
     "director",
@@ -73,8 +71,6 @@ public class Movie implements Serializable {
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "token")
   protected String genre;
-  @XmlElement(required = true)
-  protected String body;
   @XmlElement(required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "token")
@@ -172,30 +168,6 @@ public class Movie implements Serializable {
    */
   public void setGenre(String value) {
     this.genre = value;
-  }
-
-  /**
-   * Gets the value of the body property.
-   *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
-   */
-  public String getBody() {
-    return body;
-  }
-
-  /**
-   * Sets the value of the body property.
-   *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
-   */
-  public void setBody(String value) {
-    this.body = value;
   }
 
   /**
