@@ -4,7 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import study.nhatha.hibernate.HibernateUtils;
 
-import javax.persistence.PersistenceException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;

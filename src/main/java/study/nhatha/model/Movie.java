@@ -3,7 +3,6 @@ package study.nhatha.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -25,12 +24,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="genre" type="{http://www.w3.org/2001/XMLSchema}token"/>
  *         &lt;element name="body" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *         &lt;element name="duration" type="{http://www.w3.org/2001/XMLSchema}positiveInteger"/>
+ *         &lt;element name="duration" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}token"/>
  *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="plot" type="{http://www.w3.org/2001/XMLSchema}string"/>
@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "id",
     "title",
     "year",
     "genre",
@@ -66,9 +67,8 @@ public class Movie implements Serializable {
   protected long id;
   @XmlElement(required = true)
   protected String title;
-  @XmlElement(required = true)
-  @XmlSchemaType(name = "positiveInteger")
-  protected BigInteger year;
+  @XmlSchemaType(name = "unsignedShort")
+  protected int year;
   @XmlElement(required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "token")
@@ -79,9 +79,8 @@ public class Movie implements Serializable {
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "token")
   protected String country;
-  @XmlElement(required = true)
-  @XmlSchemaType(name = "positiveInteger")
-  protected BigInteger duration;
+  @XmlSchemaType(name = "unsignedShort")
+  protected int duration;
   @XmlElement(required = true)
   @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
   @XmlSchemaType(name = "token")
@@ -96,11 +95,7 @@ public class Movie implements Serializable {
   protected String stars;
 
   /**
-   * Gets the value of the title property.
-   *
-   * @return
-   *     possible object is
-   *     {@literal long }
+   * Gets the value of the id property.
    *
    */
   public long getId() {
@@ -108,11 +103,7 @@ public class Movie implements Serializable {
   }
 
   /**
-   * Sets the value of the title property.
-   *
-   * @param value
-   *     allowed object is
-   *     {@literal long }
+   * Sets the value of the id property.
    *
    */
   public void setId(long value) {
@@ -146,24 +137,16 @@ public class Movie implements Serializable {
   /**
    * Gets the value of the year property.
    *
-   * @return
-   *     possible object is
-   *     {@link BigInteger }
-   *
    */
-  public BigInteger getYear() {
+  public int getYear() {
     return year;
   }
 
   /**
    * Sets the value of the year property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link BigInteger }
-   *
    */
-  public void setYear(BigInteger value) {
+  public void setYear(int value) {
     this.year = value;
   }
 
@@ -242,24 +225,16 @@ public class Movie implements Serializable {
   /**
    * Gets the value of the duration property.
    *
-   * @return
-   *     possible object is
-   *     {@link BigInteger }
-   *
    */
-  public BigInteger getDuration() {
+  public int getDuration() {
     return duration;
   }
 
   /**
    * Sets the value of the duration property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link BigInteger }
-   *
    */
-  public void setDuration(BigInteger value) {
+  public void setDuration(int value) {
     this.duration = value;
   }
 

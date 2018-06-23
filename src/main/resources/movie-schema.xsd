@@ -4,13 +4,13 @@
   <xs:element name="movie">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="id" type="xs:positiveInteger" />
+        <xs:element name="id" type="xs:long" />
         <xs:element name="title" type="xs:string" />
-        <xs:element name="year" type="xs:positiveInteger" />
+        <xs:element name="year" type="xs:unsignedShort" />
         <xs:element name="genre" type="xs:token" />
         <xs:element name="body" type="xs:string" />
         <xs:element name="country" type="xs:token" />
-        <xs:element name="duration" type="xs:positiveInteger" />
+        <xs:element name="duration" type="xs:unsignedShort" />
         <xs:element name="director" type="xs:token" />
         <xs:element name="rating" type="xs:decimal" />
         <xs:element name="plot" type="xs:string" />
