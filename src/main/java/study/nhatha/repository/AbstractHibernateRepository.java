@@ -2,6 +2,7 @@ package study.nhatha.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.internal.util.config.ConfigurationException;
 import study.nhatha.hibernate.HibernateUtils;
 
 import java.io.Serializable;
@@ -17,7 +18,7 @@ public class AbstractHibernateRepository<T extends Serializable> {
     this.clazz = clazz;
     this.sessionFactory = HibernateUtils
         .getSessionFactory()
-        .orElseThrow(() -> new RuntimeException("Cannot initialize hibernate SessionFactory"));
+        .orElseThrow(() -> new ConfigurationException("Cannot initialize hibernate SessionFactory"));
   }
 
   public Optional<T> one(long id) {
