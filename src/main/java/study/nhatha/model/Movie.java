@@ -1,17 +1,10 @@
 
 package study.nhatha.model;
 
+import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
 /**
@@ -24,16 +17,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
- *         &lt;element name="genre" type="{http://www.w3.org/2001/XMLSchema}token"/>
- *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="genre" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="duration" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
- *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="plot" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="stars" type="{http://www.w3.org/2001/XMLSchema}token"/>
+ *         &lt;element name="stars" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -62,47 +55,62 @@ public class Movie implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  protected long id;
+  protected Long id;
+
   @XmlElement(required = true)
+  @Column(columnDefinition = "text")
   protected String title;
+
   @XmlSchemaType(name = "unsignedShort")
   protected int year;
+
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-  @XmlSchemaType(name = "token")
+  @Column(columnDefinition = "text")
   protected String genre;
+
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-  @XmlSchemaType(name = "token")
+  @Column(columnDefinition = "text")
   protected String country;
+
   @XmlSchemaType(name = "unsignedShort")
   protected int duration;
+
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-  @XmlSchemaType(name = "token")
+  @Column(columnDefinition = "text")
   protected String director;
+
   @XmlElement(required = true)
   protected BigDecimal rating;
+
   @XmlElement(required = true)
+  @Column(columnDefinition = "text")
   protected String plot;
+
   @XmlElement(required = true)
-  @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
-  @XmlSchemaType(name = "token")
+  @Column(columnDefinition = "text")
   protected String stars;
 
   /**
    * Gets the value of the id property.
    *
+   * @return
+   *     possible object is
+   *     {@link Long }
+   *
    */
-  public long getId() {
+  public Long getId() {
     return id;
   }
 
   /**
    * Sets the value of the id property.
    *
+   * @param value
+   *     allowed object is
+   *     {@link Long }
+   *
    */
-  public void setId(long value) {
+  public void setId(Long value) {
     this.id = value;
   }
 

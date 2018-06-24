@@ -13,13 +13,10 @@ public class App
 {
   public static void main( String[] args )
   {
-    HibernateMovieRepository hibernateMovieRepository = new HibernateMovieRepository();
+    HibernateMovieRepository hibernateMovieRepository = HibernateMovieRepository.getInstance();
 
-    Movie theJungleBook = new Movie();
-    theJungleBook.setTitle("The Jungle Book 3");
+    List<Movie> movies = hibernateMovieRepository.all();
 
-    List<Movie> created = hibernateMovieRepository.all();
-
-    System.out.println(created.size());
+    System.out.println(movies.size());
   }
 }
