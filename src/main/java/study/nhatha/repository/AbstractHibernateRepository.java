@@ -1,5 +1,6 @@
 package study.nhatha.repository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.util.config.ConfigurationException;
@@ -8,6 +9,7 @@ import study.nhatha.hibernate.HibernateUtils;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class AbstractHibernateRepository<T extends Serializable> {
@@ -103,5 +105,18 @@ public class AbstractHibernateRepository<T extends Serializable> {
 
   protected void rollbackTransaction() {
     getCurrentSession().getTransaction().rollback();
+  }
+
+  // TODO: SessionFactory should be properly close to terminate app
+  protected void closeSessionFactory() {
+    if (Objects.isNull(this.sessionFactory)) {
+      throw new HibernateException("Cannot close yet initialized Session Factory");
+    }
+
+    this.sessionFactory.close();
+  }
+
+  protected SessionFactory getSessionFactory() {
+    return this.sessionFactory;
   }
 }
