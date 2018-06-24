@@ -1,7 +1,7 @@
 package study.nhatha;
 
 import study.nhatha.model.Movie;
-import study.nhatha.repository.MovieRepository;
+import study.nhatha.repository.HibernateMovieRepository;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ public class App
 {
   public static void main( String[] args )
   {
-    MovieRepository movieRepository = new MovieRepository();
+    HibernateMovieRepository hibernateMovieRepository = new HibernateMovieRepository();
 
     Movie theJungleBook = new Movie();
     theJungleBook.setTitle("The Jungle Book 3");
 
-    List<Movie> created = movieRepository.all();
+    List<Movie> created = hibernateMovieRepository.all();
 
     System.out.println(created.size());
   }

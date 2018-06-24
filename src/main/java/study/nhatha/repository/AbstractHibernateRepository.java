@@ -92,15 +92,15 @@ public class AbstractHibernateRepository<T extends Serializable> {
     return sessionFactory.getCurrentSession();
   }
 
-  private void beginTransaction() {
+  protected void beginTransaction() {
     getCurrentSession().getTransaction().begin();
   }
 
-  private void commitTransaction() {
+  protected void commitTransaction() {
     getCurrentSession().getTransaction().commit();
   }
 
-  private void rollbackTransaction() {
+  protected void rollbackTransaction() {
     getCurrentSession().getTransaction().rollback();
   }
 }
