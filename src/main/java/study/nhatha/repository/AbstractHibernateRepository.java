@@ -34,7 +34,7 @@ public class AbstractHibernateRepository<T extends Serializable> {
       rollbackTransaction();
     }
 
-    return Optional.of(entity);
+    return Optional.ofNullable(entity);
   }
 
   public List<T> all() {
@@ -62,7 +62,7 @@ public class AbstractHibernateRepository<T extends Serializable> {
       rollbackTransaction();
     }
 
-    return Optional.of(entity);
+    return Optional.ofNullable(entity);
   }
 
   public Optional<T> update(T entity) {
@@ -74,7 +74,7 @@ public class AbstractHibernateRepository<T extends Serializable> {
       rollbackTransaction();
     }
 
-    return Optional.of(entity);
+    return Optional.ofNullable(entity);
   }
 
   public void delete(T entity) {
