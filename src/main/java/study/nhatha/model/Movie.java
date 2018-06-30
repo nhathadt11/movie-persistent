@@ -72,14 +72,15 @@ public class Movie implements Serializable {
   @Column(columnDefinition = "text")
   protected String country;
 
+  @XmlElement(required = true, type = Integer.class, nillable = true)
   @XmlSchemaType(name = "unsignedShort")
-  protected int duration;
+  protected Integer duration;
 
   @XmlElement(required = true)
   @Column(columnDefinition = "text")
   protected String director;
 
-  @XmlElement(required = true)
+  @XmlElement(required = true, nillable = true)
   protected BigDecimal rating;
 
   @XmlElement(required = true)
@@ -205,16 +206,24 @@ public class Movie implements Serializable {
   /**
    * Gets the value of the duration property.
    *
+   * @return
+   *     possible object is
+   *     {@link Integer }
+   *
    */
-  public int getDuration() {
+  public Integer getDuration() {
     return duration;
   }
 
   /**
    * Sets the value of the duration property.
    *
+   * @param value
+   *     allowed object is
+   *     {@link Integer }
+   *
    */
-  public void setDuration(int value) {
+  public void setDuration(Integer value) {
     this.duration = value;
   }
 
