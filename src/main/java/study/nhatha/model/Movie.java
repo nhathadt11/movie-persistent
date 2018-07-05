@@ -27,6 +27,7 @@ import java.math.BigDecimal;
  *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
  *         &lt;element name="plot" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="stars" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="image" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -46,7 +47,8 @@ import java.math.BigDecimal;
     "director",
     "rating",
     "plot",
-    "stars"
+    "stars",
+    "image"
 })
 @XmlRootElement(name = "movie")
 @Entity
@@ -90,6 +92,10 @@ public class Movie implements Serializable {
   @XmlElement(required = true)
   @Column(columnDefinition = "text")
   protected String stars;
+
+  @XmlElement(required = true)
+  @Column(columnDefinition = "text")
+  protected String image;
 
   /**
    * Gets the value of the id property.
@@ -321,6 +327,30 @@ public class Movie implements Serializable {
    */
   public void setStars(String value) {
     this.stars = value;
+  }
+
+  /**
+   * Gets the value of the image property.
+   *
+   * @return
+   *     possible object is
+   *     {@link String }
+   *
+   */
+  public String getImage() {
+    return image;
+  }
+
+  /**
+   * Sets the value of the image property.
+   *
+   * @param value
+   *     allowed object is
+   *     {@link String }
+   *
+   */
+  public void setImage(String value) {
+    this.image = value;
   }
 
 }
