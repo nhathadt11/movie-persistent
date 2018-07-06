@@ -15,7 +15,7 @@ public class App
   {
     HibernateMovieRepository hibernateMovieRepository = HibernateMovieRepository.getInstance();
 
-    List<Movie> movies = hibernateMovieRepository.all();
+    List<Movie> movies = hibernateMovieRepository.findByPageAndTitleLike(1, "star wars");
 
     System.out.println(movies.size());
   }

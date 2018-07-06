@@ -1,5 +1,7 @@
 package study.nhatha.repository;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 import study.nhatha.model.Movie;
 
 import java.util.Collections;
@@ -22,6 +24,27 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
           .setFirstResult((pageNumber - 1) * PAGE_SIZE)
           .setMaxResults(PAGE_SIZE)
           .getResultList();
+      super.commitTransaction();
+    } catch (RuntimeException e) {
+      super.rollbackTransaction();
+    }
+
+    return movies;
+  }
+
+  @Override
+  public List<Movie> findByPageAndTitleLike(int pageNumber, String title) {
+    List<Movie> movies = Collections.emptyList();
+
+    try {
+      super.beginTransaction();
+
+      Criteria criteria = super.getCurrentSession().createCriteria(Movie.class)
+          .add(Restrictions.ilike("title", "%" + title + "%"))
+          .setFirstResult((pageNumber - 1) * PAGE_SIZE)
+          .setMaxResults(PAGE_SIZE);
+      movies = criteria.list();
+
       super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
