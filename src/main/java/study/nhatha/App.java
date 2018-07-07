@@ -16,7 +16,9 @@ public class App
     HibernateMovieRepository hibernateMovieRepository = HibernateMovieRepository.getInstance();
 
     List<Movie> movies = hibernateMovieRepository.findByPageAndTitleLike(1, "star wars");
+    long count = hibernateMovieRepository.countByTitleLike("star wars");
 
     System.out.println(movies.size());
+    System.out.println(count);
   }
 }

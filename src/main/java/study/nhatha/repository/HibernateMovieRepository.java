@@ -1,6 +1,7 @@
 package study.nhatha.repository;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import study.nhatha.model.Movie;
 
@@ -51,6 +52,26 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
     }
 
     return movies;
+  }
+
+  @Override
+  public long countByTitleLike(String title) {
+    long count = 0;
+    try {
+        super.beginTransaction();
+
+        Criteria criteriaCount = super.getCurrentSession()
+            .createCriteria(Movie.class)
+            .add(Restrictions.ilike("title", "%" + title + "%"))
+            .setProjection(Projections.rowCount());
+        count = (long) criteriaCount.uniqueResult();
+
+        super.commitTransaction();
+    } catch (RuntimeException e) {
+      super.rollbackTransaction();
+    }
+
+    return count;
   }
 
   private static class HibernateMovieRepositoryHolder {
