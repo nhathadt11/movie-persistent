@@ -15,6 +15,10 @@ public final class HibernateUtils {
 
     dbConnectionProperties.load(HibernateUtils.class.getResourceAsStream("/hibernate.properties"));
 
+    dbConnectionProperties.setProperty("hibernate.connection.url",      System.getenv("JDBC_DATABASE_URL"));
+    dbConnectionProperties.setProperty("hibernate.connection.username", System.getenv("JDBC_DATABASE_USERNAME"));
+    dbConnectionProperties.setProperty("hibernate.connection.password", System.getenv("JDBC_DATABASE_PASSWORD"));
+
     return new Configuration()
         .setProperties(dbConnectionProperties)
         .addAnnotatedClass(Movie.class)
