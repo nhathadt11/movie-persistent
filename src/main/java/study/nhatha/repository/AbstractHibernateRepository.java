@@ -32,6 +32,8 @@ public class AbstractHibernateRepository<T extends Serializable> {
       commitTransaction();
     } catch (RuntimeException e) {
       rollbackTransaction();
+    } finally {
+      getCurrentSession().close();
     }
 
     return Optional.ofNullable(entity);
@@ -48,6 +50,8 @@ public class AbstractHibernateRepository<T extends Serializable> {
       commitTransaction();
     } catch (RuntimeException e) {
       rollbackTransaction();
+    } finally {
+      getCurrentSession().close();
     }
 
     return entities;
@@ -60,6 +64,8 @@ public class AbstractHibernateRepository<T extends Serializable> {
       commitTransaction();
     } catch (RuntimeException e) {
       rollbackTransaction();
+    } finally {
+      getCurrentSession().close();
     }
 
     return Optional.ofNullable(entity);
@@ -72,6 +78,8 @@ public class AbstractHibernateRepository<T extends Serializable> {
       commitTransaction();
     } catch (RuntimeException e) {
       rollbackTransaction();
+    } finally {
+      getCurrentSession().close();
     }
 
     return Optional.ofNullable(entity);
@@ -84,6 +92,8 @@ public class AbstractHibernateRepository<T extends Serializable> {
       commitTransaction();
     } catch (RuntimeException e) {
       rollbackTransaction();
+    } finally {
+      getCurrentSession().close();
     }
   }
 

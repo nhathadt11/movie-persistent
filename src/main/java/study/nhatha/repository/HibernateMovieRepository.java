@@ -28,6 +28,8 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
       super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
+    }  finally {
+      getCurrentSession().close();
     }
 
     return movies;
@@ -49,6 +51,8 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
       super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
+    }  finally {
+      getCurrentSession().close();
     }
 
     return movies;
@@ -69,6 +73,8 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
         super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
+    }  finally {
+      getCurrentSession().close();
     }
 
     return count;
