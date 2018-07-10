@@ -28,6 +28,7 @@ import java.math.BigDecimal;
  *         &lt;element name="plot" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="stars" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="image" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -48,7 +49,8 @@ import java.math.BigDecimal;
     "rating",
     "plot",
     "stars",
-    "image"
+    "image",
+    "url"
 })
 @XmlRootElement(name = "movie")
 @Entity
@@ -96,6 +98,10 @@ public class Movie implements Serializable {
   @XmlElement(required = true)
   @Column(columnDefinition = "text")
   protected String image;
+
+  @Column(columnDefinition = "text")
+  @XmlElement(required = true, nillable = true)
+  protected String url;
 
   /**
    * Gets the value of the id property.
@@ -351,6 +357,30 @@ public class Movie implements Serializable {
    */
   public void setImage(String value) {
     this.image = value;
+  }
+
+  /**
+   * Gets the value of the url property.
+   *
+   * @return
+   *     possible object is
+   *     {@link String }
+   *
+   */
+  public String getUrl() {
+    return url;
+  }
+
+  /**
+   * Sets the value of the url property.
+   *
+   * @param value
+   *     allowed object is
+   *     {@link String }
+   *
+   */
+  public void setUrl(String value) {
+    this.url = value;
   }
 
 }
