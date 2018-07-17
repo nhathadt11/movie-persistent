@@ -28,7 +28,7 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
       super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
-    }  finally {
+    } finally {
       getCurrentSession().close();
     }
 
@@ -37,6 +37,10 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
 
   @Override
   public List<Movie> findByPageAndTitleLike(int pageNumber, String title) {
+    if (pageNumber < 1) {
+      throw new IllegalArgumentException("Page number must be positive integer");
+    }
+
     List<Movie> movies = Collections.emptyList();
 
     try {
@@ -51,7 +55,7 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
       super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
-    }  finally {
+    } finally {
       getCurrentSession().close();
     }
 
@@ -73,7 +77,7 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
         super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
-    }  finally {
+    } finally {
       getCurrentSession().close();
     }
 
