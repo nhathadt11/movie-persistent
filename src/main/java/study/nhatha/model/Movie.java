@@ -18,14 +18,14 @@ import java.math.BigDecimal;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long" minOccurs="0"/>
- *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="title" type="{}NonEmptyString"/>
  *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="genre" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="country" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="duration" type="{http://www.w3.org/2001/XMLSchema}unsignedShort"/>
  *         &lt;element name="director" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="rating" type="{http://www.w3.org/2001/XMLSchema}decimal"/>
- *         &lt;element name="plot" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="plot" type="{}NonEmptyString"/>
  *         &lt;element name="stars" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="image" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="url" type="{http://www.w3.org/2001/XMLSchema}string"/>
