@@ -54,7 +54,13 @@ import java.math.BigDecimal;
 })
 @XmlRootElement(name = "movie")
 @Entity
-@Table(name = "movie", catalog = "moviedb")
+@Table(
+    name = "movie",
+    catalog = "moviedb",
+    uniqueConstraints = {
+      @UniqueConstraint(columnNames = { "title", "year" })
+    }
+)
 public class Movie implements Serializable {
 
   @Id
