@@ -3,6 +3,10 @@ package study.nhatha.repository;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import study.nhatha.model.Movie;
 
 import java.util.Collections;
@@ -46,7 +50,8 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
     try {
       super.beginTransaction();
 
-      Criteria criteria = super.getCurrentSession().createCriteria(Movie.class)
+      Criteria criteria = super.getCurrentSession()
+          .createCriteria(Movie.class)
           .add(Restrictions.ilike("title", "%" + title + "%"))
           .setFirstResult((pageNumber - 1) * PAGE_SIZE)
           .setMaxResults(PAGE_SIZE);
@@ -63,18 +68,45 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
   }
 
   @Override
+  public List<Movie> pageAndFullTextSearch(int pageNumber, String text) {
+    List<Movie> result = Collections.emptyList();
+
+    try {
+      super.beginTransaction();
+
+      FullTextSession fullTextSession = Search.getFullTextSession(super.getCurrentSession());
+      org.apache.lucene.search.Query luceneQuery = getLucenceFullTextQueryFor(text, fullTextSession);
+
+      Query jpaQuery = fullTextSession
+          .createFullTextQuery(luceneQuery, Movie.class)
+          .setFirstResult((pageNumber - 1) * PAGE_SIZE)
+          .setMaxResults(PAGE_SIZE);
+
+      result = jpaQuery.getResultList();
+
+      super.commitTransaction();
+    } catch (RuntimeException e) {
+      super.rollbackTransaction();
+    } finally {
+      super.getCurrentSession().close();
+    }
+
+    return result;
+  }
+
+  @Override
   public long countByTitleLike(String title) {
     long count = 0;
     try {
-        super.beginTransaction();
+      super.beginTransaction();
 
-        Criteria criteriaCount = super.getCurrentSession()
-            .createCriteria(Movie.class)
-            .add(Restrictions.ilike("title", "%" + title + "%"))
-            .setProjection(Projections.rowCount());
-        count = (long) criteriaCount.uniqueResult();
+      Criteria criteriaCount = super.getCurrentSession()
+          .createCriteria(Movie.class)
+          .add(Restrictions.ilike("title", "%" + title + "%"))
+          .setProjection(Projections.rowCount());
+      count = (long) criteriaCount.uniqueResult();
 
-        super.commitTransaction();
+      super.commitTransaction();
     } catch (RuntimeException e) {
       super.rollbackTransaction();
     } finally {
@@ -82,6 +114,57 @@ public class HibernateMovieRepository extends GenericHibernateRepository<Movie> 
     }
 
     return count;
+  }
+
+  @Override
+  public long countByTitleFullTextSearch(String text) {
+    List<Movie> result = Collections.emptyList();
+
+    try {
+      super.beginTransaction();
+
+      FullTextSession fullTextSession = Search.getFullTextSession(super.getCurrentSession());
+      org.apache.lucene.search.Query luceneQuery = getLucenceFullTextQueryFor(text, fullTextSession);
+
+      Query jpaQuery = fullTextSession
+          .createFullTextQuery(luceneQuery, Movie.class);
+
+      result = jpaQuery.getResultList();
+      super.commitTransaction();
+    } catch (RuntimeException e) {
+      super.rollbackTransaction();
+    } finally {
+      super.getCurrentSession().close();
+    }
+
+    return result.size();
+  }
+
+  private org.apache.lucene.search.Query getLucenceFullTextQueryFor(String text, FullTextSession session) {
+    QueryBuilder qb = session
+        .getSearchFactory()
+        .buildQueryBuilder()
+        .forEntity(Movie.class)
+        .get();
+
+    return qb
+        .bool()
+        .should(qb
+            .keyword()
+            .wildcard()
+            .onFields("title", "genre", "year", "plot")
+            .matching("*" + text + "*")
+            .createQuery()
+        )
+        .should(qb
+            .phrase()
+            .withSlop(5)
+            .onField("title")
+            .andField("genre").andField("year").andField("plot")
+            .sentence(text)
+            .createQuery()
+        )
+        .createQuery();
   }
 
   private static class HibernateMovieRepositoryHolder {

@@ -1,6 +1,11 @@
 
 package study.nhatha.model;
 
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.FieldBridge;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.bridge.builtin.IntegerBridge;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
@@ -53,6 +58,7 @@ import java.math.BigDecimal;
     "url"
 })
 @XmlRootElement(name = "movie")
+@Indexed
 @Entity
 @Table(
     name = "movie",
@@ -69,13 +75,17 @@ public class Movie implements Serializable {
 
   @XmlElement(required = true)
   @Column(columnDefinition = "text")
+  @Field
   protected String title;
 
   @XmlSchemaType(name = "unsignedShort")
+  @Field
+  @FieldBridge(impl = IntegerBridge.class)
   protected int year;
 
   @XmlElement(required = true)
-  @Column(columnDefinition = "text")
+  @Column
+  @Field
   protected String genre;
 
   @XmlElement(required = true)
@@ -95,6 +105,7 @@ public class Movie implements Serializable {
 
   @XmlElement(required = true)
   @Column(columnDefinition = "text")
+  @Field
   protected String plot;
 
   @XmlElement(required = true)

@@ -15,10 +15,13 @@ public class App
   {
     HibernateMovieRepository hibernateMovieRepository = HibernateMovieRepository.getInstance();
 
-    List<Movie> movies = hibernateMovieRepository.findByPageAndTitleLike(1, "star wars");
-    long count = hibernateMovieRepository.countByTitleLike("star wars");
+//    List<Movie> movies = hibernateMovieRepository.findByPageAndTitleLike(1, "star wars");
+//    long count = hibernateMovieRepository.countByTitleLike("star wars");
+
+    List<Movie> movies = hibernateMovieRepository.pageAndFullTextSearch(1, "có");
 
     System.out.println(movies.size());
-    System.out.println(count);
+    movies.forEach(m -> System.out.println(m.getTitle()));
+//    System.out.println(count);
   }
 }

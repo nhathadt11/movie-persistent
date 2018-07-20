@@ -4,6 +4,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.util.config.ConfigurationException;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import study.nhatha.hibernate.HibernateUtils;
 
 import java.io.Serializable;
@@ -15,12 +17,19 @@ import java.util.Optional;
 public class AbstractHibernateRepository<T extends Serializable> {
   private Class clazz;
   private SessionFactory sessionFactory;
+  private FullTextSession fullTextSession;
 
   public AbstractHibernateRepository(Class<T> clazz) {
     this.clazz = clazz;
     this.sessionFactory = HibernateUtils
         .getSessionFactory()
         .orElseThrow(() -> new ConfigurationException("Cannot initialize hibernate SessionFactory"));
+    this.fullTextSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
+    try {
+      fullTextSession.createIndexer().startAndWait();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 
   public Optional<T> one(long id) {
@@ -128,5 +137,9 @@ public class AbstractHibernateRepository<T extends Serializable> {
 
   protected SessionFactory getSessionFactory() {
     return this.sessionFactory;
+  }
+
+  protected FullTextSession getFullTextSession() {
+    return this.fullTextSession;
   }
 }
